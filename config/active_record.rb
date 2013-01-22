@@ -5,7 +5,7 @@ require 'uri'
 ActiveRecord::Base.logger = Logger.new(STDOUT)
 ActiveRecord::Migration.verbose = true
 
-if ENV['RACK_ENV'] = 'development'
+if ENV['RACK_ENV'] == 'development'
   dbconfig = YAML::load(File.open('config/database.yml'))
   ActiveRecord::Base.establish_connection dbconfig[ENV['RACK_ENV']]
 else
