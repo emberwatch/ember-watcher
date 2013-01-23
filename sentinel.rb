@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'tweetstream'
-require File.dirname(__FILE__) + '/tweet'
+require File.dirname(__FILE__) + '/models/tweet'
 
 # Patch TweetStream Daemon for Heroku
 # See https://github.com/heroku-examples/tweetstream-example
