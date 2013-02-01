@@ -1,11 +1,10 @@
 require 'rubygems'
 require 'bundler/setup'
-require File.dirname(__FILE__) + '/models/tweet'
+require 'sidekiq'
 
+require File.dirname(__FILE__) + '/jobs/process_tweet'
 require File.dirname(__FILE__) + '/config/tweetstream'
 
-TweetStream::Daemon.new.track('#emberjs', "ember.js") do |status|
-  status.urls.each do |url|
-    Tweet.create(tweet_id: status.id, url: url.expanded_url)
-  end
+TweetStream::Daemon.new.track('#emberjs', "ember.js", "ember-data") do |status|
+  ProcessTweet.perform_async(Marshal.dump(status.attrs))
 end
