@@ -12,7 +12,8 @@ class Kirby
       begin
         Link.create(
           url:      follow_link(url.expanded_url),
-          tweet_id: tweet.id
+          tweet_id: tweet.id,
+          posted_at: tweet.created_at
         )
       rescue
       end
