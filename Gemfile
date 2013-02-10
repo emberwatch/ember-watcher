@@ -6,6 +6,7 @@ gem 'activerecord'
 gem 'logger'
 gem 'sidekiq'
 gem 'rest-open-uri'
+gem 'msgpack'
 
 group :development do
   gem "sqlite3"
