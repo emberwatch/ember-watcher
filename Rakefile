@@ -2,6 +2,7 @@ require "rubygems"
 require "bundler/setup"
 require "active_record"
 require "csv"
+require "msgpack"
 
 namespace :db do
   task :environment do
@@ -28,7 +29,7 @@ namespace :data do
     tweet_ids.each do |id|
       putc '.'
       status = Twitter.status(id, include_entities: true)
-      ProcessTweet.perform_async(Marshal.dump(status.attrs))
+      ProcessTweet.perform_async(MessagePack.pack(status.attrs))
     end
     puts ""
     puts "Finished"
@@ -42,7 +43,7 @@ namespace :data do
     tweet_ids.each do |id|
       putc '.'
       status = Twitter.status(id, include_entities: true)
-      ProcessTweet.perform_async(Marshal.dump(status.attrs))
+      ProcessTweet.perform_async(MessagePack.pack(status.attrs))
     end
     puts ""
     puts "Finished"
