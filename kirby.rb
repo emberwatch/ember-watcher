@@ -1,13 +1,10 @@
-require 'twitter'
 require 'rest-open-uri'
-require 'msgpack'
 
 require File.join(File.dirname(__FILE__), '/config/active_record')
 require File.join(File.dirname(__FILE__), '/models/link')
 
 class Kirby
-  def suck_urls(marshalled_tweet)
-    tweet = Twitter::Tweet.new(MessagePack.unpack(marshalled_tweet))
+  def suck_urls(tweet)
     return if tweet.urls.empty?
     tweet.urls.each do |url|
       begin
