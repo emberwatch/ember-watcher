@@ -6,7 +6,11 @@ class ProcessTweet
   include Sidekiq::Worker
 
   def perform(tweet_id)
-    status = Twitter.status(tweet_id)
-    Kirby.new.suck_urls(status)
+    begin
+      status = Twitter.status(tweet_id)
+      Kirby.new.suck_urls(status)
+    rescue Twitter::Error::NotFound => error
+      puts "TWITTER ERROR: Tweet with id #{tweet_id} was not found. \n#{error}"
+    end
   end
 end
